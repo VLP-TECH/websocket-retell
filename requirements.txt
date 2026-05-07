@@ -1,4 +1,5 @@
 fastapi
 uvicorn[standard]
-aiohttp
 httpx
+websockets
+python-dotenv
