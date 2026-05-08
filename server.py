@@ -78,6 +78,7 @@ async def health():
 
 async def get_embedding(text: str) -> list:
     try:
+
         async with httpx.AsyncClient(timeout=30) as client:
 
             response = await client.post(
@@ -101,10 +102,13 @@ async def get_embedding(text: str) -> list:
             return data["data"][0]["embedding"]
 
         print("[EMBED ERROR] formato desconocido")
+
         return []
 
     except Exception as e:
+
         print(f"[RAG ERROR - EMBEDDING] {e}")
+
         return []
 
 
@@ -113,6 +117,7 @@ async def get_embedding(text: str) -> list:
 # =========================================================
 
 async def search_qdrant(query: str, top_k: int = 3) -> str:
+
     try:
 
         embedding = await get_embedding(query)
@@ -163,7 +168,9 @@ async def search_qdrant(query: str, top_k: int = 3) -> str:
         return contexto
 
     except Exception as e:
+
         print(f"[RAG ERROR - QDRANT] {e}")
+
         return ""
 
 
@@ -220,17 +227,17 @@ async def call_ollama(messages: list) -> str:
 # WEBSOCKET
 # =========================================================
 
-@app.websocket("/llm-websocket/{call_id}")
-async def websocket_handler(
-    websocket: WebSocket,
-    call_id: str
-):
+@app.websocket("/llm-websocket")
+async def websocket_handler(websocket: WebSocket):
 
     await websocket.accept()
 
-    print(f"[OPEN] call_id={call_id}")
+    print("[OPEN] websocket conectado")
 
-    # Mensaje inicial
+    # =====================================================
+    # MENSAJE INICIAL
+    # =====================================================
+
     await websocket.send_text(json.dumps({
         "response_type": "response",
         "response_id": 0,
@@ -247,9 +254,9 @@ async def websocket_handler(
 
             interaction_type = request.get("interaction_type")
 
-            # =========================================
+            # =================================================
             # PING / PONG
-            # =========================================
+            # =================================================
 
             if interaction_type == "ping_pong":
 
@@ -260,16 +267,16 @@ async def websocket_handler(
 
                 continue
 
-            # =========================================
+            # =================================================
             # UPDATE ONLY
-            # =========================================
+            # =================================================
 
             if interaction_type == "update_only":
                 continue
 
-            # =========================================
+            # =================================================
             # RESPONSE REQUIRED
-            # =========================================
+            # =================================================
 
             if interaction_type in (
                 "response_required",
@@ -293,9 +300,9 @@ async def websocket_handler(
 
                 print(f"[USER] {ultima_pregunta}")
 
-                # =====================================
+                # =============================================
                 # RAG
-                # =====================================
+                # =============================================
 
                 contexto = ""
 
@@ -304,9 +311,9 @@ async def websocket_handler(
                         ultima_pregunta
                     )
 
-                # =====================================
+                # =============================================
                 # SYSTEM MESSAGE
-                # =====================================
+                # =============================================
 
                 system_msg = SYSTEM_PROMPT
 
@@ -345,17 +352,17 @@ async def websocket_handler(
                     f"{len(messages)} mensajes"
                 )
 
-                # =====================================
+                # =============================================
                 # CALL MODEL
-                # =====================================
+                # =============================================
 
                 reply = await call_ollama(messages)
 
                 print(f"[REPLY] {reply}")
 
-                # =====================================
+                # =============================================
                 # SEND RESPONSE
-                # =====================================
+                # =============================================
 
                 await websocket.send_text(json.dumps({
                     "response_type": "response",
@@ -369,7 +376,7 @@ async def websocket_handler(
 
     except WebSocketDisconnect:
 
-        print(f"[CLOSE] call_id={call_id}")
+        print("[CLOSE] websocket desconectado")
 
     except Exception as e:
 
