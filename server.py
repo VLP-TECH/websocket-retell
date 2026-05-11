@@ -7,6 +7,9 @@ from fastapi.websockets import WebSocketDisconnect
 
 app = FastAPI()
 
+@app.on_event("startup")
+async def startup_event():
+    print("SERVER STARTED OK")
 
 # =========================================================
 # CONFIG
@@ -373,6 +376,7 @@ async def websocket_handler(websocket: WebSocket):
                     "content_complete": True,
                     "end_call": False
                 }))
+                
 
     except WebSocketDisconnect:
 
