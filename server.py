@@ -39,6 +39,10 @@ QDRANT_COLLECTION = os.getenv(
     "QDRANT_COLLECTION",
     "avidocumentation2"
 )
+QDRANT_API_KEY = os.getenv(
+    "QDRANT_API_KEY", 
+    ""
+)
 
 
 OPENING_MESSAGE = (
