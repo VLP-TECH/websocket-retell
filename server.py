@@ -41,7 +41,7 @@ QDRANT_COLLECTION = os.getenv(
 )
 QDRANT_API_KEY = os.getenv(
     "QDRANT_API_KEY", 
-    ""
+    "brMO3lyleeLXjUrr4UiTjxe8K9dlHEVk"
 )
 
 
