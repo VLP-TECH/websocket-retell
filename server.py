@@ -229,12 +229,19 @@ async def call_ollama(messages: list) -> str:
 # WEBSOCKET
 # =========================================================
 
+# =========================================================
+# WEBSOCKET
+# =========================================================
+
 @app.websocket("/llm-websocket/{call_id}")
-async def websocket_handler(websocket: WebSocket):
+async def websocket_handler(
+    websocket: WebSocket,
+    call_id: str
+):
 
     await websocket.accept()
 
-    print(f"[OPEN] call_id: {websocket.path_params['call_id']}")
+    print(f"[OPEN] call_id={call_id}")
 
     # =====================================================
     # MENSAJE INICIAL
@@ -375,13 +382,11 @@ async def websocket_handler(websocket: WebSocket):
                     "content_complete": True,
                     "end_call": False
                 }))
-                
 
     except WebSocketDisconnect:
 
+        print(f"[CLOSE] call_id={call_id}")
 
-    print("[CLOSE] websocket desconectado")
-    
     except Exception as e:
 
         print(f"[WEBSOCKET ERROR] {e}")
