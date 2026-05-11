@@ -22,7 +22,7 @@ OLLAMA_URL = os.getenv(
 
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "llama3.1:8b"
+    "llama3.2:3b"
 )
 
 OLLAMA_EMBED_MODEL = os.getenv(
@@ -197,8 +197,8 @@ async def call_ollama(messages: list) -> str:
                     "messages": messages,
                     "stream": False,
                     "options": {
-                        "temperature": 0.5,
-                        "num_predict": 150
+                        "temperature": 0.2,
+                        "num_predict": 60
                     }
                 }
             )
