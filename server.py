@@ -17,7 +17,7 @@ async def startup_event():
 
 OLLAMA_URL = os.getenv(
     "OLLAMA_URL",
-    "https://ia-tools-ollama.rzd02y.easypanel.host"
+    "https://ia-tools-ollama.rzd02y.easypanel.host/"
 )
 
 OLLAMA_MODEL = os.getenv(
@@ -40,7 +40,6 @@ QDRANT_COLLECTION = os.getenv(
     "avidocumentation2"
 )
 
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", "")
 
 OPENING_MESSAGE = (
     "Hola, gracias por llamar a CDV Consulting. "
