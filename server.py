@@ -22,7 +22,7 @@ OLLAMA_URL = os.getenv(
 
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "smollm2:360m"
+    "smollm2:135m"
 )
 
 OLLAMA_EMBED_MODEL = os.getenv(
