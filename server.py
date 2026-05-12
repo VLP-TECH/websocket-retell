@@ -190,6 +190,7 @@ async def search_qdrant(query: str, top_k: int = 3) -> str:
 # OLLAMA CHAT
 # =========================================================
 
+
 async def call_ollama(messages: list) -> str:
 
     try:
@@ -202,9 +203,14 @@ async def call_ollama(messages: list) -> str:
                     "model": OLLAMA_MODEL,
                     "messages": messages,
                     "stream": False,
+                    "keep_alive": -1,
                     "options": {
-                        "temperature": 0.2,
-                        "num_predict": 60
+                        "num_ctx": 512,
+                        "num_predict": 24,
+                        "temperature": 0.1,
+                        "top_k": 10,
+                        "top_p": 0.7,
+                        "repeat_penalty": 1.02
                     }
                 }
             )
@@ -233,7 +239,6 @@ async def call_ollama(messages: list) -> str:
         return (
             "Disculpa, ahora mismo tengo un problema técnico."
         )
-
 
 # =========================================================
 # WEBSOCKET
