@@ -22,7 +22,7 @@ OLLAMA_URL = os.getenv(
 
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "llama3.2-1b-turbo:latest"
+    "qwen2.5:0.5b"
 )
 
 OLLAMA_EMBED_MODEL = os.getenv(
