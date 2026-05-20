@@ -56,8 +56,6 @@ Eres Gabriel, asistente de CDV Consulting.
 Responde SIEMPRE en español.
 
 IMPORTANTE:
-- respuestas cortas
-- máximo 2 frases
 - tono natural
 - no expliques demasiado
 - evita respuestas largas
@@ -208,12 +206,12 @@ async def call_ollama(messages: list) -> str:
                     "stream": False,
                     "keep_alive": -1,
                     "options": {
-                        "num_ctx": 512,
-                        "num_predict": 24,
+                        "num_ctx": 2048,     # más contexto = mejor comprensión
+                        "num_predict": 60,   # suficiente para 2 frases cortas
                         "temperature": 0.1,
                         "top_k": 10,
                         "top_p": 0.7,
-                        "repeat_penalty": 1.02
+                        "repeat_penalty": 1.1
                     }
                 }
             )
