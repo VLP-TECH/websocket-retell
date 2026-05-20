@@ -17,12 +17,12 @@ async def startup_event():
 
 OLLAMA_URL = os.getenv(
     "OLLAMA_URL",
-    "https://ia-tools-ollama.rzd02y.easypanel.host/"
+    "http://46.4.17.165:11434"
 )
 
 OLLAMA_MODEL = os.getenv(
     "OLLAMA_MODEL",
-    "qwen25-fast"
+    "qwen2.5:14b"
 )
 
 OLLAMA_EMBED_MODEL = os.getenv(
@@ -190,6 +190,9 @@ async def search_qdrant(query: str, top_k: int = 3) -> str:
 # OLLAMA CHAT
 # =========================================================
 
+# =========================================================
+# OLLAMA CHAT
+# =========================================================
 
 async def call_ollama(messages: list) -> str:
 
